@@ -1,3 +1,6 @@
 *.pyc
 .DS_STOREGE
 .DS_Store
+*.txt
+*.pyc
+*.swp
