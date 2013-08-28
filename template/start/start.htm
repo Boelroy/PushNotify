@@ -1,0 +1,17 @@
+<section class="notify-section">
+	<div class="container">
+		<div class="jumbotron">
+			<h2>Test the Android Notification</h2>
+			<p>This is the exmple to test the Android notification! Make sure the Mosquitto Broker is running on your server</p>
+			{% csrf_token %}
+			<form id="notify"role="form">
+				<div class="form-group">
+					<label for="notifymessage">Notification Message</label>
+					<textarea class="form-control" rows="3" name="notifymessage" id="notifymessage"></textarea>
+				</div>
+			</form>
+			<button type="button" id="submit"class="btn btn-default"  data-loading-text="loading stuff..."data-complete-text="Pushing success">Push Message</button>
+			<small id="msg" class="text-success hide">already pushed</small>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,54 @@
+<section class="notify-section">
+	<div class="container">
+		<div class="row">
+
+			<!-- side bar -->
+			{%include "users/sidebar.htm"%}
+			
+			<!--Body-->
+			<div class="col-lg-9">     
+				<div class="panel panel-default">
+
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ title }}</h3>
+					</div>
+
+					<div class="panel-body">
+						
+						<table class="table table-hover">
+
+							<thead>
+								<tr>
+									<th>Username</th>
+									<th>Last IP</th>
+									<th>Online status</th>
+									<th>Last Online Time</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{% for user in users %}
+								<tr>
+									<td>{{ user.name }}</td>
+									<td>{{ user.ip }}</td>
+									{% if user.onlineStatus %}
+									<td><span class="glyphicon glyphicon-user active">Online</span></td>
+									{% else %}
+									<td><span class="glyphicon glyphicon-user ">Offline</span></td>
+									{% endif %}
+									<td>2007,6,8,18:45</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+				</div>	
+			</div>
+
+
+		  </div>
+		</div>
+	</div>
+</section>
