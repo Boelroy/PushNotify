@@ -19,7 +19,6 @@ def getUser(request):
 	renderDic = {}
 	renderDic['users'] = users
 	renderDic['title'] = title
-	print users[1].onlineStatus
 	c = RequestContext(request,renderDic)
 
 	return render_to_response('users/users.htm', c)

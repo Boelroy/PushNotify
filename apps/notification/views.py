@@ -15,7 +15,7 @@ def notification(request):
 	notifymessage = request.GET['notifymessage']
 
 	no = Notify()
-	no.notify(notifymessage)
+	no.notify('tokudo/123',notifymessage, no.NOTIFY_TYPE_ALL)
 
 	return response;
 
@@ -23,3 +23,7 @@ def start(request):
 	c = RequestContext(request,{})
 	renderTemplate = "start/start.htm"
 	return render_to_response(renderTemplate, c)
+
+
+def insertNotify(msg):
+	pass
