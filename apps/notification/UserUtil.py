@@ -36,14 +36,9 @@ class UserUtil(object):
 		print changeDic
 		if existUser:
 			for attribute, value in changeDic.iteritems():
-				print attribute
-				print "in set attr " + attribute + "and the value is" + str(value)
 				setattr(existUser, attribute, value)
-				print attribute + str(getattr(existUser, attribute))
 
-			print "it is saving the user"
 			existUser.save()
-			print str(existUser.onlineStatus)
 
 	def isInUsers(self, name):
 		try:
