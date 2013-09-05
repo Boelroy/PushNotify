@@ -3,7 +3,7 @@ from datetime import *
 from UserUtil import UserUtil
 import threading
 from mqttmanage import MqttManagement
-from models import OffLineNotification
+from models import CachedNotification
 from models import Users
 
 def singleton(cls, *args, **kw):   
@@ -40,17 +40,18 @@ class Notify(object):
 
 	def notify(self, topic, msg, type):
 		try:
-			self.mqtt.publish(topic, str(msg))
+			self.__notify(topic, msg)
 		except Exception, e:
 			self.mqtt.connect(host=self.mqtt_host, port=self.mqtt_port)
 
-		self.mqtt.publish(topic, str(msg),1)
 		self.mqtt.subscribe('tokudo/12', 0)
 		if type == self.NOTIFY_TYPE_SINGLE:
 			self.cacheMsg(msg, type, topic)
 		elif type == self.NOTIFY_TYPE_ALL:
 			self.cacheMsg(msg, type, None)
 
+	def __notify(self, topic, msg):
+		self.mqtt.publish(topic, str(msg),1)
 
 	def onConnect(self, ip, name):
 		print "Connecting " + name
@@ -60,8 +61,12 @@ class Notify(object):
 						onlineStatus=True,
 						ip=ip,
 						lastonLineTime=datetime.now())
-			
-			self.notify(name,"welcome back", self.NOTIFY_TYPE_SINGLE)
+			userList = self.userUtil.getUsers(name)
+			if hasattr(userList,"msgUser"):
+				msgList = userList.msgUser.all()
+				if msgList:
+					self.__notify(name,msgList[0].note)
+					self.deleteMsg(name)
 		else:
 
 			self.userUtil.addUser(name=name,
@@ -91,21 +96,25 @@ class Notify(object):
 		mThread.start()
 
 	def on_message(self, mosq, obj, msg):
-		try:
-			cacheMsgs = OffLineNotification.objects.filter(notifiUsername = msg.payload)
-			for cacheMsg in cacheMsgs:
-				message = OffLineNotification.objects.get(id=message.id)
-				message.delete()
-
-		except Exception, e:
-			pass
+		print msg.payload
+		self.deleteMsg(msg.payload)
 
 	def cacheMsg(self, msg, type, name=None):
 		if type == self.NOTIFY_TYPE_ALL:
 			users = Users.objects.all()
 			for user in users:
-				newCachedMsg = OffLineNotification(notifiUsername=user.name, note=msg)
+				newCachedMsg = CachedNotification(msgUser=user, notifiUsername=user.name, note=msg)
 				newCachedMsg.save()
 		elif type == self.NOTIFY_TYPE_SINGLE:
-			newCachedMsg = OffLineNotification(notifiUsername=name, note=msg)
+			newCachedMsg = CachedNotification(msgUser=user, notifiUsername=name, note=msg)
 			newCachedMsg.save()
+
+	def deleteMsg(self, name):
+		try:
+			cacheMsgs = CachedNotification.objects.filter(notifiUsername = name)
+			for cacheMsg in cacheMsgs:
+				message = CachedNotification.objects.get(id=cacheMsg.id)
+				message.delete()
+
+		except Exception, e:
+			pass
