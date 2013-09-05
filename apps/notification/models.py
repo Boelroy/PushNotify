@@ -7,14 +7,18 @@ class Users(models.Model):
 	lastonLineTime = models.DateTimeField()
 	onlineStatus = models.BooleanField()
 	ip = models.IPAddressField()
+	class Meta(object):
+		db_table='users'
 
 
-
-class OffLineNotification(models.Model):
+class CachedNotification(models.Model):
 	""" Model of Notification that no 
 		pushed to the user
 	"""
+	msgUser = models.ForeignKey(Users, db_column='uid',related_name="msgUser")
 	note = models.CharField(max_length=7000)
 	notifiUsername = models.CharField(max_length=30)
+	class Meta(object):
+		db_table='cached_notification'
 
 	
