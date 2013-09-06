@@ -16,7 +16,7 @@ def singleton(cls, *args, **kw):
 
 @singleton
 class Notify(object):
-	mqtt_port = 1883
+	mqtt_port = 1884
 	mqtt_host = "127.0.0.1"
 
 	NOTIFY_TYPE_ALL = 0
