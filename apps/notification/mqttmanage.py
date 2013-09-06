@@ -4,10 +4,10 @@ import re
 
 def singleton(cls, *args, **kw):   
     instances = {}   
-    def _singleton():   
+    def _singleton(**kw):   
         if cls not in instances:   
             instances[cls] = cls(*args, **kw)   
-        return instances[cls]   
+        return instances[cls]  
     return _singleton
 
 @singleton
@@ -21,7 +21,8 @@ class MqttManagement(object):
 	ERROR_PATTERN = r'\d+: (Error): Address already in use'
 
 	"""docstring for MqttMangement"""
-	def __init__(self, mosquittoPath):
+	def __init__(self, mosquittoPath=None):
+		self.mosquittoPath=mosquittoPath
 		self.__runStatus = False;
 		if(mosquittoPath == None):
 			raise Exception("mosquitto path can not be none")

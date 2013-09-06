@@ -28,7 +28,7 @@ class Notify(object):
 		self.isConnect = False
 
 		#start the mosquitto broker
-		self.mqttBroker = MqttManagement("/usr/sbin/mosquitto")
+		self.mqttBroker = MqttManagement(mosquittoPath="/usr/sbin/mosquitto")
 		self.mqttBroker.onDisconnect = self.onDisconnect
 		self.mqttBroker.onConnect = self.onConnect
 
