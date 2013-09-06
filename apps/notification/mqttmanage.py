@@ -2,8 +2,17 @@ import os
 import threading
 import re
 
+def singleton(cls, *args, **kw):   
+    instances = {}   
+    def _singleton():   
+        if cls not in instances:   
+            instances[cls] = cls(*args, **kw)   
+        return instances[cls]   
+    return _singleton
+
+@singleton
 class MqttManagement(object):
-	execShell = "{0} 2>&1"
+	execShell = "{0} -p 1884 2>&1"
 	NEW_CONNECTION_PATTERN = r'\d+: New client connected from (\d+\.\d+\.\d+\.\d+) as (\S+)\..*'
 	DISCONNECT_PATTERN_1 = r'\d+: Socket read error on client (\S+), disconnecting.*'
 	DISCONNECT_PATTERN_2 = r'\d+: Client (\S+) has exceeded timeout, disconnecting.*'
