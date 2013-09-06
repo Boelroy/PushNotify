@@ -28,7 +28,7 @@ class Notify(object):
 		self.isConnect = False
 
 		#start the mosquitto broker
-		self.mqttBroker = MqttManagement("/usr/local/sbin/mosquitto")
+		self.mqttBroker = MqttManagement("/usr/sbin/mosquitto")
 		self.mqttBroker.onDisconnect = self.onDisconnect
 		self.mqttBroker.onConnect = self.onConnect
 
@@ -42,7 +42,7 @@ class Notify(object):
 		try:
 			self.__notify(topic, msg)
 		except Exception, e:
-			self.mqtt.connect(host=self.mqtt_host, port=self.mqtt_port)
+			self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 
 		self.mqtt.subscribe('tokudo/12', 0)
 		if type == self.NOTIFY_TYPE_SINGLE:
@@ -85,7 +85,7 @@ class Notify(object):
 			raise Exception("Unkown Users disconnect from the server")
 
 	def onCmdRun(self):
-		self.mqtt.connect(host=self.mqtt_host, port=self.mqtt_port)
+		self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 
 		def loop():
 			rc = 0

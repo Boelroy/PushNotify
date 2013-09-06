@@ -4,7 +4,7 @@ import re
 
 class MqttManagement(object):
 	execShell = "{0} 2>&1"
-	NEW_CONNECTION_PATTERN = r'\d+: New client connected from (\d+\.\d+\.\d+\.\d+) as (\S+) .*'
+	NEW_CONNECTION_PATTERN = r'\d+: New client connected from (\d+\.\d+\.\d+\.\d+) as (\S+)\..*'
 	DISCONNECT_PATTERN_1 = r'\d+: Socket read error on client (\S+), disconnecting.*'
 	DISCONNECT_PATTERN_2 = r'\d+: Client (\S+) has exceeded timeout, disconnecting.*'
 	START_PATTERN = r'\d+: (Opening ipv6 listen socket on port 1883.)'
