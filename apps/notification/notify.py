@@ -40,10 +40,14 @@ class Notify(object):
 
 	def notify(self, topic, msg, type):
 		try:
-			self.__notify(topic, msg)
+			self.mqtt.publish(topic, str(msg))
+			self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
+			print msg
 		except Exception, e:
+			print e
 			self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 
+		self.mqtt.publish(topic, str(msg))
 		self.mqtt.subscribe('tokudo/12', 0)
 		if type == self.NOTIFY_TYPE_SINGLE:
 			self.cacheMsg(msg, type, topic)
@@ -85,6 +89,7 @@ class Notify(object):
 			raise Exception("Unkown Users disconnect from the server")
 
 	def onCmdRun(self):
+		print "running"
 		self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 
 		def loop():
