@@ -6,6 +6,10 @@ from mqttmanage import MqttManagement
 from models import CachedNotification
 from models import Users
 
+
+mqttBroker = MqttManagement(mosquittoPath="/usr/sbin/mosquitto")
+mqttBroker.run()
+
 def singleton(cls, *args, **kw):   
     instances = {}   
     def _singleton():   
@@ -28,14 +32,12 @@ class Notify(object):
 		self.isConnect = False
 
 		#start the mosquitto broker
-		self.mqttBroker = MqttManagement(mosquittoPath="/usr/sbin/mosquitto")
-		self.mqttBroker.onDisconnect = self.onDisconnect
-		self.mqttBroker.onConnect = self.onConnect
+		mqttBroker.onDisconnect = self.onDisconnect
+		mqttBroker.onConnect = self.onConnect
 
-		self.mqttBroker.onCmdRun = self.onCmdRun
+		mqttBroker.onCmdRun = self.onCmdRun
 
 		self.userUtil = UserUtil()
-		self.mqttBroker.run()
 		pass
 
 	def notify(self, topic, msg, type):
