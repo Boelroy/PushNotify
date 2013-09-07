@@ -5,6 +5,7 @@ import threading
 from mqttmanage import MqttManagement
 from models import CachedNotification
 from models import Users
+import os
 
 
 mqttBroker = MqttManagement(mosquittoPath="/usr/sbin/mosquitto")
@@ -38,7 +39,7 @@ class Notify(object):
 		mqttBroker.onCmdRun = self.onCmdRun
 
 		self.userUtil = UserUtil()
-		pass
+		print "Current Os id is " + os.getpid()
 
 	def notify(self, topic, msg, type):
 		try:
