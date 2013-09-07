@@ -41,13 +41,11 @@ class Notify(object):
 	def notify(self, topic, msg, type):
 		try:
 			self.mqtt.publish(topic, str(msg))
-			self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 			print msg
 		except Exception, e:
 			print e
 			self.mqtt.connect(hostname=self.mqtt_host, port=self.mqtt_port)
 
-		self.mqtt.publish(topic, str(msg))
 		self.mqtt.subscribe('tokudo/12', 0)
 		if type == self.NOTIFY_TYPE_SINGLE:
 			self.cacheMsg(msg, type, topic)
@@ -55,7 +53,7 @@ class Notify(object):
 			self.cacheMsg(msg, type, None)
 
 	def __notify(self, topic, msg):
-		self.mqtt.publish(topic, str(msg),1)
+		self.mqtt.publish(topic, str(msg))
 
 	def onConnect(self, ip, name):
 		print "Connecting " + name
@@ -69,6 +67,7 @@ class Notify(object):
 			if hasattr(userList,"msgUser"):
 				msgList = userList.msgUser.all()
 				if msgList:
+					print "send cacheMsg"
 					self.__notify(name,msgList[0].note)
 					self.deleteMsg(name)
 		else:
