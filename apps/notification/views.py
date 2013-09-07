@@ -15,6 +15,7 @@ def notification(request):
 	notifymessage = request.GET['notifymessage']
 
 	no = Notify()
+	print no
 	no.notify('tokudo/123',notifymessage, no.NOTIFY_TYPE_ALL)
 
 	return response;
