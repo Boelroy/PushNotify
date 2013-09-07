@@ -85,7 +85,7 @@ class Notify(object):
 					lastonLineTime=datetime.now())
 
 		else :
-			raise Exception("Unkown Users disconnect from the server")
+			print Exception("Unkown Users disconnect from the server")
 
 	def onCmdRun(self):
 		print "running"
