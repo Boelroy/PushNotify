@@ -39,7 +39,7 @@ class Notify(object):
 		mqttBroker.onCmdRun = self.onCmdRun
 
 		self.userUtil = UserUtil()
-		print "Current Os id is " + os.getpid()
+		print "Current Os id is " + str(os.getpid())
 
 	def notify(self, topic, msg, type):
 		try:
