@@ -8,6 +8,7 @@
 * (TODO)离线消息缓存
   
 ### How to using
+***
 * 运行环境Mac/*nix
 * 装有[moquitto](http://mosquitto.org/)
 * 安装[Django](https://www.djangoproject.com/)
@@ -17,6 +18,7 @@ execShell = "{0} -p 1884 2>&1"
 ```
   
 ### TODO
+***
 * 将[Android](https://github.com/tokudu/AndroidPushNotificationsDemo)客户端的ip和端口改为你的端口和ip
 
 * 独立出mosquitto管理模块，针对客户端数量开启活关闭服务
